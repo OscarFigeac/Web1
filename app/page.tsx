@@ -4,6 +4,8 @@ import Logo from '@/public/code_club_logo.jpg'
 import scratch from '@/public/scratch.png'
 import python from '@/public/python.png'
 import web from '@/public/web.png'
+// import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+// import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 
 const webPage = () => {
   return (

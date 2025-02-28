@@ -1,3 +1,6 @@
+//import postgres from 'postgres';
+//const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' }); could try that out
+ 
 import { sql } from '@vercel/postgres';
 import {
   CustomerField,
