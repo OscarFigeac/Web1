@@ -9,9 +9,9 @@ import { fetchTechnologies } from './lib/data'
 // import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 export default async function Page() {
   const tech = await fetchTechnologies;
-}
+//}
 
-const webPage = () => {
+//const webPage = () => {
   return (
     <div className="container bg-blue-50 mx-auto px-10 rounded-xl border-4 border-dashed border-opacity-10 border-blue-800">
       
