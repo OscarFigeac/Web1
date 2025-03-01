@@ -4,8 +4,12 @@ import Logo from '@/public/code_club_logo.jpg'
 import scratch from '@/public/scratch.png'
 import python from '@/public/python.png'
 import web from '@/public/web.png'
+import { fetchTechnologies } from './lib/data'
 // import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 // import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+export default async function Page() {
+  const tech = await fetchTechnologies;
+}
 
 const webPage = () => {
   return (
@@ -56,4 +60,4 @@ const webPage = () => {
   )
 }
 
-export default webPage
+//export default webPage
