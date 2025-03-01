@@ -32,7 +32,7 @@ export async function fetchTechnologyDetailsById(id: number) {
   }
 }
 
- 
+//added a comment to push onto git
 
 
 // import { sql } from '@vercel/postgres';
