@@ -33,6 +33,7 @@ async function seed() {
     }finally{
         await db.end();
     }
-}
+
+}  
 
 seed();

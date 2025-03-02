@@ -32,6 +32,31 @@ export async function fetchTechnologyDetailsById(id: number) {
   }
 }
 
+export async function fetchScratchPage() {
+  const { connection } = require('next/server');
+  const {Client} = require ('pg');
+  require('dotenv').config();
+  const db = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnathorised: false
+    }
+  });   
+  try{
+    await db.connect();
+        const result = await db.query('SELECT * FROM scratch_page LIMIT 1;');
+        await db.end();
+
+        if (result.rows.length > 0){
+          return result.rows[0];
+        }else{
+          return null;
+        }
+  }catch (error) {
+    console.error('Database Error -> ', error);
+    return null;
+}
+
 //added a comment to push onto git
 
 
@@ -252,3 +277,4 @@ export async function fetchTechnologyDetailsById(id: number) {
 //     throw new Error('Failed to fetch customer table.');
 //   }
 // }
+}

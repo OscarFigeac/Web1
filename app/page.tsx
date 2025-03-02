@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Logo from '@/public/code_club_logo.jpg';
 import { fetchTechnologies } from './lib/data';
 
 export default async function Page() {
@@ -27,7 +26,7 @@ export default async function Page() {
             {technologies.map((tech) => (
               <section
                 key={tech.id}
-                className={`p-6 rounded-lg shadow-md ${tech.background_color}`} // Use background color from database
+                className={`p-6 rounded-lg shadow-md ${tech.background_color}`} //might have to drop the settings table
               >
                 <Image src={tech.image_url} alt={tech.title} width={500} height={300} className="mb-4" />
                 <h3 className="text-xl font-semibold mb-2">{tech.title}</h3>
