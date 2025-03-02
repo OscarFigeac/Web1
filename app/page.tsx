@@ -1,63 +1,48 @@
-import React from 'react'
-import Image from 'next/image'
-import Logo from '@/public/code_club_logo.jpg'
-import scratch from '@/public/scratch.png'
-import python from '@/public/python.png'
-import web from '@/public/web.png'
-import { fetchTechnologies } from './lib/data'
-// import RevenueChart from '@/app/ui/dashboard/revenue-chart';
-// import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import React from 'react';
+import Image from 'next/image';
+import Logo from '@/public/code_club_logo.jpg';
+import { fetchTechnologies } from './lib/data';
+
 export default async function Page() {
-  const tech = await fetchTechnologies;
-//}
+  const technologies = await fetchTechnologies();
 
-//const webPage = () => {
   return (
-    <div className="container bg-blue-50 mx-auto px-10 rounded-xl border-4 border-dashed border-opacity-10 border-blue-800">
-      
+    <div className="container mx-auto px-10">
       <main>
-        <article className="container clear-both bg-lime-400 mx-auto my-4 px-4 py-4 rounded-xl border-dashed border-4 border-opacity-20 border-green-900">
-        
-        <Image src={Logo} alt="CodeClubLogo" className="h-12 w-12 rounded-xl float-left opacity-0 md:opacity-100"/>
+        <div className="bg-green-500 text-white p-8 text-center">
+          <h1 className="text-4xl font-bold mb-4">Learn to code with Code Club</h1>
+          <p className="text-lg">
+            Our projects have step-by-step instructions to teach you how to create games, animations, and much more. Choose from hundreds of options, in up to 30
+            languages.
+          </p>
+        </div>
 
+        <div className="container mx-auto py-12 px-4">
+          <h2 className="text-2xl font-semibold text-center mb-8">Start with a project path</h2>
+          <p className="text-center mb-8">
+            Each of our project paths guides you through a series of six projects that will help you build your coding and design skills.
+          </p>
 
-          <header className="container bg-green-200 mx-auto mt-4 p-4 rounded-xl w-4/5 border-2 border-opacity-50 shadow-lg border-green-900">
-            <h1 className="text-xl font-bold text-green-800">Learn To Code With CodeClub</h1>
-            <p className="m-4 text-lg">Our projects have step-by-step instructions to teach you how to create games, animations, and much more. Choose from hundreds of options, in up to 30 languages.</p>
-          </header><br />
-
-          <div id="panels" className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 w-4/5 mx-auto">
-          <section className="p-4  bg-orange-200 rounded-md mx-2 border-solid border-2 border-opacity-40 shadow-lg border-orange-800">
-            <Image src={scratch} alt="webImage" />
-                       
-              <h2 className="font-bold text-orange-800 text-xl pt-2">Scratch</h2>              
-              <p className="m-2">Create animations, apps, and interactive stories by adding code, costumes, and sounds</p>
-
-            </section>
-
-            <section className="p-4 bg-blue-100 rounded-md mx-2 border-solid border-2 border-opacity-40 shadow-lg border-blue-800">
-              <Image src={python} alt="webMore" />
-                <h2 className="font-bold text-blue-800 text-xl pt-2">Python</h2>
-                  <p className="m-2">Make digital art, games, and more while exploring one of the world's most popular programming languages.</p><br />
-
-            </section>
-
-            <section className="p-4 bg-blue-100 rounded-md mx-2 border-solid border-2 border-opacity-40 shadow-lg border-blue-800">
-              <Image src={web} alt="webMore" />
-                <h2 className="font-bold text-blue-800 text-xl pt-2">Web design</h2>
-                  <p className="m-2">Build websites and apps by learning HTML, CSS, and JavaScript.</p><br />
-
-            </section>
-
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {technologies.map((tech) => (
+              <section
+                key={tech.id}
+                className={`p-6 rounded-lg shadow-md ${tech.background_color}`} // Use background color from database
+              >
+                <Image src={tech.image_url} alt={tech.title} width={500} height={300} className="mb-4" />
+                <h3 className="text-xl font-semibold mb-2">{tech.title}</h3>
+                <p className="mb-4">{tech.description}</p>
+                <a
+                  href={tech.link}
+                  className="bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded inline-block"
+                >
+                  Explore {tech.title} project paths
+                </a>
+              </section>
+            ))}
           </div>
-        </article>
+        </div>
       </main>
-
-      <footer className="align-bottom italic">
-        Dublin Road, Dundalk
-      </footer>
     </div>
-  )
+  );
 }
-
-//export default webPage
