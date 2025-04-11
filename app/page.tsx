@@ -5,8 +5,12 @@ import { fetchTechnologies } from './lib/data';
 export default async function Page() {
   const technologies = await fetchTechnologies();
 
+  if (!technologies) {
+    return <div>Error loading data.</div>;
+}
+
   return (
-    <div className="container mx-auto px-10">
+    <div className= 'mx-auto px-10 rounded-xl border-4 border-dashed border-opacity-10 border-green-800'>
       <main>
         <div className="bg-green-500 text-white p-8 text-center">
           <h1 className="text-4xl font-bold mb-4">Learn to code with Code Club</h1>
@@ -23,7 +27,7 @@ export default async function Page() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {technologies.map((tech) => (
+            {/* {technologies.map((tech) => (
               <section
                 key={tech.id}
                 className={`p-6 rounded-lg shadow-md ${tech.background_color}`} //might have to drop the settings table
@@ -38,7 +42,42 @@ export default async function Page() {
                   Explore {tech.title} project paths
                 </a>
               </section>
-            ))}
+            ))} */}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8"> 
+                                <section className="bg-white rounded-xl shadow-lg p-6">
+                                    <div className="relative">
+                                        <Image src={technologies.image_url} alt="Intro Image" width={500} height={300} className="rounded-t-xl" />
+                                    </div>
+                                    <h2 className="text-xl font-semibold mt-4 text-gray-800">{technologies.intro}</h2>
+                                    <p className="mt-2 text-gray-700">{technologies.description}</p>
+                                    <a href={technologies.link} className="bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded inline-block">
+                                      Explore {technologies.title} project paths
+                                    </a>
+                                </section>
+            
+                                <section className="bg-white rounded-xl shadow-lg p-6">
+                                    <div className="relative">
+                                        <Image src={pythonData.more_image_url} alt="More Image" width={500} height={300} className="rounded-t-xl" />
+                                    </div>
+                                    <h2 className="text-xl font-semibold mt-4 text-gray-800">{pythonData.more_title}</h2>
+                                    <p className="mt-2 text-gray-700">{pythonData.more_description}</p>
+                                    <a href={tech.link} className="bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded inline-block">
+                                      Explore {tech.title} project paths
+                                    </a>
+                                </section>
+
+                                <section className="bg-white rounded-xl shadow-lg p-6">
+                                    <div className="relative">
+                                        <Image src={pythonData.more_image_url} alt="More Image" width={500} height={300} className="rounded-t-xl" />
+                                    </div>
+                                    <h2 className="text-xl font-semibold mt-4 text-gray-800">{pythonData.more_title}</h2>
+                                    <p className="mt-2 text-gray-700">{pythonData.more_description}</p>
+                                    <a href={tech.link} className="bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded inline-block">
+                                      Explore {tech.title} project paths
+                                    </a>
+                                </section>
+            
           </div>
         </div>
       </main>
