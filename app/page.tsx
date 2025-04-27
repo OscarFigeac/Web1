@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { fetchTechnologies } from './lib/data';
+import AuthForms from './auth/reg'; // Ensure this path is correct
 
 export default async function Page() {
   const technologies = await fetchTechnologies();
@@ -26,7 +27,7 @@ export default async function Page() {
             {technologies.map((tech) => (
               <section
                 key={tech.id}
-                className={`p-6 rounded-lg shadow-md ${tech.background_color}`} //might have to drop the settings table
+                className={`p-6 rounded-lg shadow-md ${tech.background_color}`}
               >
                 <Image src={tech.image_url} alt={tech.title} width={500} height={300} className="mb-4" />
                 <h3 className="text-xl font-semibold mb-2">{tech.title}</h3>
@@ -41,7 +42,8 @@ export default async function Page() {
             ))}
           </div>
         </div>
+        <AuthForms />
       </main>
     </div>
   );
-} 
+}

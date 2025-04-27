@@ -2,103 +2,143 @@ import postgres from 'postgres';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-export async function fetchTechnologies() {
-  const { connection } = require('next/server');
-  const {Client} = require ('pg');
-  require('dotenv').config();
-  const db = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnathorised: false
-    }
-  });   
-  try{
-    await db.connect();
-        const result = await db.query('SELECT * FROM scratch_page LIMIT 1;');
-        await db.end();
+// export async function fetchTechnologies() {
+//   const { connection } = require('next/server');
+//   const {Client} = require ('pg');
+//   require('dotenv').config();
+//   const db = new Client({
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: {
+//         rejectUnathorised: false
+//     }
+//   });   
+//   try{
+//     await db.connect();
+//         const result = await db.query('SELECT * FROM scratch_page LIMIT 1;');
+//         await db.end();
 
-        if (result.rows.length > 0){
-          return result.rows[0];
-        }else{
-          return null;
-        }
-  }catch (error) {
-    console.error('Database Error -> ', error);
-    return null;
-  }
-  // try{
-  //   const tech = await sql`SELECT * FROM technologies`;
-  //   return tech;
-  // } catch (error){
-  //   console.error('Database Error -> ', error)
-  //   throw new Error('Failed to connect to the technologies table. Couldnt fecth data.')
-//}  
+//         if (result.rows.length > 0){
+//           return result.rows[0];
+//         }else{
+//           return null;
+//         }
+//   }catch (error) {
+//     console.error('Database Error -> ', error);
+//     return null;
+//   }
+//   // try{
+//   //   const tech = await sql`SELECT * FROM technologies`;
+//   //   return tech;
+//   // } catch (error){
+//   //   console.error('Database Error -> ', error)
+//   //   throw new Error('Failed to connect to the technologies table. Couldnt fecth data.')
+// //}  
+// }
+
+// export async function fetchTechnologyById(id: number) {
+//   const { connection } = require('next/server');
+//   const {Client} = require ('pg');
+//   require('dotenv').config();
+//   const db = new Client({
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: {
+//         rejectUnathorised: false
+//     }
+//   });   
+//   try{
+//     await db.connect();
+//         const result = await db.query('SELECT * FROM technologies WHERE id = ${id};');
+//         await db.end();
+
+//         if (result.rows.length > 0){
+//           return result.rows[0];
+//         }else{
+//           return null;
+//         }
+//   }catch (error) {
+//     console.error('Database Error -> ', error);
+//     return null;
+//   }
+//   // try{
+//   //   const tech = await sql`SELECT * FROM technologies WHERE id = ${id}`;
+//   //   return tech[0];
+//   // } catch (error){
+//   //   console.error('Database Error -> ', error)
+//   //   throw new Error('Failed to connect to the technologies table. Couldnt fecth data.')
+//   // }
+// }
+
+// export async function fetchTechnologyDetailsById(id: number) {
+//   const { connection } = require('next/server');
+//   const {Client} = require ('pg');
+//   require('dotenv').config();
+//   const db = new Client({
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: {
+//         rejectUnathorised: false
+//     }
+//   });   
+//   try{
+//     await db.connect();
+//         const result = await db.query('SELECT * FROM technologies WHERE id = ${id};');
+//         await db.end();
+
+//         if (result.rows.length > 0){
+//           return result.rows[0];
+//         }else{
+//           return null;
+//         }
+//   }catch (error) {
+//     console.error('Database Error -> ', error);
+//     return null;
+//   }
+//   // try{
+//   //   const tech = await sql`SELECT * FROM technologies_details WHERE technology_id = ${id}`;
+//   //   return tech;
+//   // } catch (error){
+//   //   console.error('Database Error -> ', error)
+//   //   throw new Error('Failed to connect to the technologies table. Couldnt fecth data.')
+//   // }
+// }
+interface Technology {
+  id: number;
+  title: string;
+  description: string;
+  link: string;
+  image_url: string;
+  background_color: string;
+  // Add any other columns from your 'technologies' table
 }
 
-export async function fetchTechnologyById(id: number) {
-  const { connection } = require('next/server');
-  const {Client} = require ('pg');
-  require('dotenv').config();
-  const db = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnathorised: false
-    }
-  });   
-  try{
-    await db.connect();
-        const result = await db.query('SELECT * FROM technologies WHERE id = ${id};');
-        await db.end();
-
-        if (result.rows.length > 0){
-          return result.rows[0];
-        }else{
-          return null;
-        }
-  }catch (error) {
+export async function fetchTechnologies(): Promise<Technology[]> {
+  try {
+    const technologies = await sql<Technology[]>`SELECT id, title, description, link, image_url, background_color FROM technologies`;
+    return technologies;
+  } catch (error) {
     console.error('Database Error -> ', error);
-    return null;
+    throw new Error('Failed to fetch technologies from the database.');
   }
-  // try{
-  //   const tech = await sql`SELECT * FROM technologies WHERE id = ${id}`;
-  //   return tech[0];
-  // } catch (error){
-  //   console.error('Database Error -> ', error)
-  //   throw new Error('Failed to connect to the technologies table. Couldnt fecth data.')
-  // }
 }
 
-export async function fetchTechnologyDetailsById(id: number) {
-  const { connection } = require('next/server');
-  const {Client} = require ('pg');
-  require('dotenv').config();
-  const db = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnathorised: false
-    }
-  });   
-  try{
-    await db.connect();
-        const result = await db.query('SELECT * FROM technologies WHERE id = ${id};');
-        await db.end();
-
-        if (result.rows.length > 0){
-          return result.rows[0];
-        }else{
-          return null;
-        }
-  }catch (error) {
+export async function fetchTechnologyById(id: number): Promise<Technology | null> {
+  try {
+    const technology = await sql<Technology[]>`SELECT id, title, description, link, image_url, background_color FROM technologies WHERE id = ${id}`;
+    return technology.length > 0 ? technology[0] : null;
+  } catch (error) {
     console.error('Database Error -> ', error);
     return null;
   }
-  // try{
-  //   const tech = await sql`SELECT * FROM technologies_details WHERE technology_id = ${id}`;
-  //   return tech;
-  // } catch (error){
-  //   console.error('Database Error -> ', error)
-  //   throw new Error('Failed to connect to the technologies table. Couldnt fecth data.')
-  // }
+}
+
+export async function fetchTechnologyDetailsById(id: number): Promise<any | null> {
+  // Assuming 'technologies' table has the details for now, adjust if needed
+  try {
+    const technologyDetails = await sql<any[]>`SELECT * FROM technologies WHERE id = ${id}`;
+    return technologyDetails.length > 0 ? technologyDetails[0] : null;
+  } catch (error) {
+    console.error('Database Error -> ', error);
+    return null;
+  }
 }
 
 export async function fetchScratchPage() {
