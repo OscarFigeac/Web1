@@ -1,11 +1,23 @@
 "use client";
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function AuthForms() {
   const [isRegistering, setIsRegistering] = useState(false);
+  const router = useRouter();
 
   const toggleForm = () => {
     setIsRegistering(!isRegistering);
+  };
+
+  const handleRegisterSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    router.push('./page/page.tsx'); // Redirect to page.tsx
+  };
+
+  const handleLoginSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    router.push('./page/page.tsx'); // Redirect to page.tsx
   };
 
   return (
@@ -22,8 +34,7 @@ function AuthForms() {
         </button>
 
         {isRegistering ? (
-          // Registration Form
-          <form className="space-y-4">
+          <form onSubmit={handleRegisterSubmit} className="space-y-4">
             <div>
               <label htmlFor="register-username" className="block text-gray-700 text-sm font-bold mb-2">
                 Username:
@@ -72,8 +83,7 @@ function AuthForms() {
             </button>
           </form>
         ) : (
-          // Login Form
-          <form className="space-y-4">
+          <form onSubmit={handleLoginSubmit} className="space-y-4">
             <div>
               <label htmlFor="login-identifier" className="block text-gray-700 text-sm font-bold mb-2">
                 Username or Email:

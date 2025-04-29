@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { fetchTechnologies } from './lib/data';
-import AuthForms from './auth/reg'; // Ensure this path is correct
+import { fetchTechnologies } from '../lib/data';
 
 export default async function Page() {
   const technologies = await fetchTechnologies();
@@ -42,7 +41,6 @@ export default async function Page() {
             ))}
           </div>
         </div>
-        <AuthForms />
       </main>
     </div>
   );
